@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>✈️ 旅途記帳本 (多幣別版)</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --subtext: #64748b;
+      --border: #cbd5e1;
+      --accent: #ef4444;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      margin: 0; padding: 16px;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .card {
+      background: var(--card);
+      width: 100%; max-width: 480px;
+      padding: 20px; border-radius: 16px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -1px rgba(0,0,0,0.04);
+      margin-bottom: 20px; box-sizing: border-box;
+    }
+    h2 { margin-top: 0; color: var(--primary); font-size: 1.25rem; }
+    .form-group { margin-bottom: 14px; }
+    .form-row { display: flex; gap: 10px; }
+    .form-row .form-group { flex: 1; }
+    label { display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 6px; }
+    input, select {
+      width: 100%; padding: 12px; border: 1px solid var(--border);
+      border-radius: 8px; font-size: 1rem; box-sizing: border-box;
+      outline: none; transition: border-color 0.2s;
+    }
+    input:focus, select:focus { border-color: var(--primary); }
+    .calc-preview {
+      background-color: #f1f5f9; padding: 10px 12px; border-radius: 8px;
+      font-size: 0.875rem; color: var(--subtext); margin-top: 6px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .calc-preview strong { color: var(--primary); font-size: 1rem; }
+    button {
+      width: 100%; padding: 14px; background-color: var(--primary);
+      color: white; border: none; border-radius: 8px;
+      font-size: 1rem; font-weight: bold; cursor: pointer;
+      margin-top: 8px;
+    }
+    button:disabled { background-color: #94a3b8; }
+    .list-item {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 12px 0; border-bottom: 1px solid #f1f5f9;
+    }
+    .item-detail { display: flex; flex-direction: column; gap: 2px; }
+    .item-title { font-weight: 600; font-size: 0.95rem; }
+    .item-sub { font-size: 0.75rem; color: var(--subtext); }
+    .item-amounts { text-align: right; display: flex; flex-direction: column; gap: 2px; }
+    .item-amount-original { font-size: 0.825rem; color: var(--subtext); }
+    .item-amount-twd { font-weight: bold; color: var(--accent); font-size: 1rem; }
+    .rate-status { font-size: 0.75rem; color: var(--subtext); margin-bottom: 10px; text-align: right; }
+  </style>
+</head>
+<body>
+
+  <!-- 新增記帳表單 -->
+  <div class="card">
+    <h2>✈️ 新增旅途支出 (多幣別)</h2>
+    <form id="expenseForm">
+      <div class="form-group">
+        <label for="item">項目名稱</label>
+        <input type="text" id="item" placeholder="例：敘敘苑燒肉、地鐵一日券" required>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group" style="flex: 0.8;">
+          <label for="currency">幣別</label>
+          <select id="currency" required>
+            <option value="JPY" selected>🇯🇵 JPY (日圓)</option>
+            <option value="KRW">🇰🇷 KRW (韓元)</option>
+            <option value="USD">🇺🇸 USD (美金)</option>
+            <option value="EUR">🇪🇺 EUR (歐元)</option>
+            <option value="THB">🇹🇭 THB (泰銖)</option>
+            <option value="HKD">🇭🇰 HKD (港幣)</option>
+            <option value="CNY">🇨🇳 CNY (人民幣)</option>
+            <option value="TWD">🇹🇼 TWD (新台幣)</option>
+          </select>
+        </div>
+        <div class="form-group" style="flex: 1.2;">
+          <label for="amount">外幣金額</label>
+          <input type="number" id="amount" placeholder="0" step="any" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="exchangeRate">自訂/即時匯率 (1外幣 = ? TWD)</label>
+          <input type="number" id="exchangeRate" placeholder="取得中..." step="0.0001" required>
+        </div>
+      </div>
+
+      <!-- 自動計算預覽 -->
+      <div class="calc-preview">
+        <span>折合台幣試算：</span>
+        <strong id="twdPreview">NT$ 0</strong>
+      </div>
+
+      <div class="form-row" style="margin-top: 14px;">
+        <div class="form-group">
+          <label for="paymentMethod">支付方式</label>
+          <select id="paymentMethod" required>
+            <option value="現金">💵 現金</option>
+            <option value="信用卡">💳 信用卡</option>
+            <option value="電子票證/行動支付">📱 電子票證/行動支付</option>
+            <option value="其他">🌀 其他</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="category">消費類別</label>
+          <select id="category" required>
+            <option value="餐飲">🍔 餐飲</option>
+            <option value="交通">🚆 交通</option>
+            <option value="住宿">🏨 住宿</option>
+            <option value="購物">🛍️ 購物</option>
+            <option value="娛樂">🎟️ 娛樂/門票</option>
+            <option value="雜項">📦 雜項</option>
+          </select>
+        </div>
+      </div>
+
+      <button type="submit" id="submitBtn">儲存資料</button>
+    </form>
+  </div>
+
+  <!-- 近期紀錄 -->
+  <div class="card">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <h2>📜 近期紀錄</h2>
+      <span class="rate-status" id="rateStatus">匯率數據同步中...</span>
+    </div>
+    <div id="recordsList">載入中...</div>
+  </div>
+
+  <script>
+    // ⚠️ 請替換為您在 Google Apps Script 部署取得的 Web App URL
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbwBFQJuZ-jZpV_ZetksWDrke78B0XhAkJlGa7LGmSNEzXGHz5PMVLHl36Fxbt6pFVdd/exec";
+    const EXCHANGE_API = "https://open.er-api.com/v6/latest/TWD";
+
+    const form = document.getElementById('expenseForm');
+    const currencySelect = document.getElementById('currency');
+    const amountInput = document.getElementById('amount');
+    const rateInput = document.getElementById('exchangeRate');
+    const twdPreview = document.getElementById('twdPreview');
+    const submitBtn = document.getElementById('submitBtn');
+    const recordsList = document.getElementById('recordsList');
+    const rateStatus = document.getElementById('rateStatus');
+
+    let currentRates = {};
+
+    // 抓取最新即時匯率
+    async function fetchExchangeRates() {
+      try {
+        const res = await fetch(EXCHANGE_API);
+        const data = await res.json();
+        if (data && data.rates) {
+          currentRates = data.rates;
+          rateStatus.innerText = "已同步國際即時匯率";
+          updateExchangeRateInput();
+        }
+      } catch (err) {
+        rateStatus.innerText = "使用預設匯率估值";
+        currentRates = { JPY: 4.65, KRW: 42.0, USD: 0.031, EUR: 0.028, THB: 1.1, HKD: 0.24, CNY: 0.22, TWD: 1.0 };
+        updateExchangeRateInput();
+      }
+    }
+
+    // 切換幣別時自動填入參考匯率
+    function updateExchangeRateInput() {
+      const selectedCurrency = currencySelect.value;
+      if (selectedCurrency === 'TWD') {
+        rateInput.value = "1.0";
+      } else if (currentRates[selectedCurrency]) {
+        const rateToTWD = (1 / currentRates[selectedCurrency]).toFixed(4);
+        rateInput.value = rateToTWD;
+      }
+      calculateTWD();
+    }
+
+    // 計算折合台幣
+    function calculateTWD() {
+      const amount = parseFloat(amountInput.value) || 0;
+      const rate = parseFloat(rateInput.value) || 0;
+      const twdVal = Math.round(amount * rate);
+      twdPreview.innerText = `NT$ ${twdVal.toLocaleString()}`;
+    }
+
+    // 載入近期紀錄
+    async function loadRecords() {
+      try {
+        const res = await fetch(GAS_URL);
+        const data = await res.json();
+        
+        if (!data || data.length === 0) {
+          recordsList.innerHTML = "<p style='color:#64748b;'>尚無記帳紀錄</p>";
+          return;
+        }
+
+        const recent = data.reverse().slice(0, 10);
+        recordsList.innerHTML = recent.map(r => {
+          const originalAmt = r['外幣金額'] ? `${r['外幣幣別'] || ''} ${Number(r['外幣金額']).toLocaleString()}` : '';
+          const twdAmt = r['台幣金額'] ? `NT$ ${Number(r['台幣金額']).toLocaleString()}` : `NT$ ${Number(r['金額'] || 0).toLocaleString()}`;
+          return `
+            <div class="list-item">
+              <div class="item-detail">
+                <span class="item-title">${r['項目']}</span>
+                <span class="item-sub">${r['類別']} • ${r['支付方式']}</span>
+              </div>
+              <div class="item-amounts">
+                <span class="item-amount-twd">${twdAmt}</span>
+                ${originalAmt ? `<span class="item-amount-original">${originalAmt}</span>` : ''}
+              </div>
+            </div>
+          `;
+        }).join('');
+      } catch (err) {
+        recordsList.innerHTML = "<p style='color:#ef4444;'>紀錄載入失敗</p>";
+      }
+    }
+
+    // 表單送出
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      submitBtn.disabled = true;
+      submitBtn.innerText = "儲存中...";
+
+      const amount = parseFloat(amountInput.value) || 0;
+      const rate = parseFloat(rateInput.value) || 1;
+      const amountTWD = Math.round(amount * rate);
+
+      const payload = {
+        item: document.getElementById('item').value,
+        currency: currencySelect.value,
+        amountForeign: amount,
+        exchangeRate: rate,
+        amountTWD: amountTWD,
+        paymentMethod: document.getElementById('paymentMethod').value,
+        category: document.getElementById('category').value,
+        datetime: new Date().toLocaleString("zh-TW", { timeZone: "Asia/Taipei" })
+      };
+
+      try {
+        await fetch(GAS_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        alert("記帳成功！");
+        form.reset();
+        updateExchangeRateInput();
+        setTimeout(loadRecords, 1000);
+      } catch (err) {
+        alert("儲存失敗，請檢查網路連線。");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerText = "儲存資料";
+      }
+    });
+
+    currencySelect.addEventListener('change', updateExchangeRateInput);
+    amountInput.addEventListener('input', calculateTWD);
+    rateInput.addEventListener('input', calculateTWD);
+
+    fetchExchangeRates();
+    loadRecords();
+  </script>
+</body>
+</html>
