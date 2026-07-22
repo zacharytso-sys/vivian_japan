@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="東京五日">
+<meta name="theme-color" content="#1f3a5f">
+<title>東京五日輕鬆遊 2026/7/29–8/2</title>
+<style>
+:root{
+  --ink:#1a1a1a; --muted:#6b6f76; --line:#e3e0d8;
+  --paper:#faf7f0; --card:#ffffff;
+  --navy:#1f3a5f; --red:#b4452f; --teal:#2f6b64; --gold:#a8802a;
+  --d1:#b4452f; --d2:#a8802a; --d3:#2f6b64; --d4:#5b4a8a; --d5:#1f3a5f;
+}
+*{box-sizing:border-box;-webkit-text-size-adjust:100%}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Noto Sans CJK TC","PingFang TC","Hiragino Sans",-apple-system,"Helvetica Neue",sans-serif;
+  font-size:15px;line-height:1.6;
+  padding:0 0 40px;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:560px;margin:0 auto;padding:0 12px}
+
+header{
+  background:var(--navy);color:#fff;
+  padding:22px 14px calc(18px + env(safe-area-inset-top,0px));
+  padding-top:calc(22px + env(safe-area-inset-top,0px));
+  margin-bottom:0;border-bottom:3px solid var(--gold);
+}
+header .inner{max-width:560px;margin:0 auto}
+h1{margin:0 0 3px;font-size:22px;letter-spacing:1.2px;font-weight:700;line-height:1.3}
+.sub{font-size:11.5px;opacity:.85;letter-spacing:.3px;line-height:1.6}
+.flightbar{
+  margin-top:12px;background:rgba(255,255,255,.11);border-radius:8px;
+  padding:9px 11px;font-size:12px;line-height:1.8
+}
+.flightbar b{color:#ffd98a;font-weight:600}
+
+nav{
+  position:sticky;top:0;z-index:20;
+  display:flex;gap:5px;overflow-x:auto;
+  padding:9px 12px;margin-bottom:16px;
+  background:rgba(250,247,240,.94);
+  -webkit-backdrop-filter:saturate(180%) blur(12px);
+  backdrop-filter:saturate(180%) blur(12px);
+  border-bottom:1px solid var(--line);
+  -webkit-overflow-scrolling:touch;scrollbar-width:none;
+}
+nav::-webkit-scrollbar{display:none}
+nav a{
+  flex:0 0 auto;text-decoration:none;font-size:12px;font-weight:600;
+  padding:6px 12px;border-radius:16px;background:#fff;color:var(--navy);
+  border:1px solid var(--line);white-space:nowrap
+}
+
+.day{margin-bottom:20px;background:var(--card);border:1px solid var(--line);
+  border-radius:11px;overflow:hidden}
+.dayhd{padding:12px 14px;color:#fff}
+.d1 .dayhd{background:var(--d1)} .d2 .dayhd{background:var(--d2)}
+.d3 .dayhd{background:var(--d3)} .d4 .dayhd{background:var(--d4)}
+.d5 .dayhd{background:var(--d5)}
+.dayhd .n{font-size:10px;letter-spacing:2px;opacity:.85;font-weight:700}
+.dayhd h2{margin:2px 0 0;font-size:16.5px;font-weight:700;line-height:1.35}
+.dayhd .date{font-size:11px;opacity:.9;margin-top:3px;line-height:1.5}
+
+.stops{list-style:none;margin:0;padding:4px 0}
+.stop{padding:11px 13px;border-bottom:1px solid #f0ede6;display:flex;gap:10px}
+.stop:last-child{border-bottom:0}
+.time{flex:0 0 42px;font-size:12.5px;font-weight:700;color:var(--navy);
+  font-variant-numeric:tabular-nums;padding-top:2px;letter-spacing:-.3px}
+.body{flex:1;min-width:0}
+.name{font-weight:700;font-size:15px;margin-bottom:2px;line-height:1.4}
+.jp{font-size:11px;color:var(--muted);margin-bottom:4px;line-height:1.5}
+.note{font-size:12.5px;color:#43474d;line-height:1.65}
+.tag{display:inline-block;font-size:10px;font-weight:700;padding:1px 6px;
+  border-radius:4px;margin-left:4px;vertical-align:2px;white-space:nowrap}
+.t-book{background:#fdecea;color:#a3392a}
+.t-time{background:#fff3d6;color:#8a6414}
+.t-free{background:#e6f2ef;color:#22574f}
+.map{display:inline-block;margin-top:7px;font-size:12px;font-weight:600;
+  text-decoration:none;color:#fff;background:var(--navy);
+  padding:6px 13px;border-radius:6px}
+.map:active{opacity:.7}
+
+.box{background:#fff;border:1px solid var(--line);border-radius:11px;
+  padding:14px;margin-bottom:18px}
+.box h3{margin:0 0 9px;font-size:15px;color:var(--navy);
+  border-left:4px solid var(--gold);padding-left:8px;line-height:1.4}
+.box ul{margin:0;padding-left:17px;font-size:12.5px;line-height:1.75}
+.box li{margin-bottom:6px}
+.kv{font-size:12.5px;line-height:1.9}
+.kv b{display:inline-block;min-width:60px;color:var(--muted);font-weight:600}
+.warn{background:#fff8e8;border-color:#e8d9a8}
+.warn h3{border-left-color:var(--red)}
+.step{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #f2efe8;
+  font-size:12.5px;line-height:1.65;color:#43474d}
+.step:last-of-type{border-bottom:0}
+.sn{flex:0 0 22px;height:22px;border-radius:50%;background:var(--navy);color:#fff;
+  font-size:11px;font-weight:700;display:flex;align-items:center;
+  justify-content:center;margin-top:2px;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact}
+code{background:#f2efe8;padding:1px 4px;border-radius:4px;font-size:11.5px;
+  font-family:ui-monospace,Menlo,monospace;word-break:break-all}
+footer{text-align:center;font-size:11px;color:var(--muted);padding:6px 12px 0}
+
+@media print{
+  @page{margin:0}
+  html,body{background:var(--paper)}
+  body{padding:0;font-size:13px}
+  .note,.step,.box ul,.kv{font-size:13px;line-height:1.72}
+  .name{font-size:15.5px}
+  .jp{font-size:11.5px}
+  nav{display:none}
+  .map{display:none}
+  .wrap{max-width:none;padding:0 9px}
+  header{padding:16px 10px 14px;margin-bottom:12px}
+  header .inner{max-width:none}
+  h1{font-size:19px}
+  .day{margin-bottom:14px;break-inside:auto}
+  .dayhd{break-after:avoid;page-break-after:avoid}
+  .stop{break-inside:avoid;page-break-inside:avoid}
+  .step{break-inside:avoid;page-break-inside:avoid}
+  .box{break-inside:auto}
+  .box h3{break-after:avoid;page-break-after:avoid}
+  header,.dayhd,.sn,.tag,.warn{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+
+@font-face{font-family:'Yomogi';src:local('Yomogi');}
+@font-face{font-family:'ZenMaru';src:local('Zen Maru Gothic');}
+.sketch text{font-family:'Yomogi','Zen Maru Gothic','Noto Sans CJK TC',sans-serif}
+.sketch .hd{font-family:'Zen Maru Gothic','Yomogi',sans-serif}
+</style>
+</head>
+<body>
+
+<header><div class="inner">
+  <h1>東京五日輕鬆遊</h1>
+  <div class="sub">2026 / 7 / 29 (三) — 8 / 2 (日)　│　2 位大人　│　住宿：VIA INN 新宿</div>
+  <div class="flightbar">
+    <b>去程</b> IT200　桃園 06:35 → 成田 11:00<br>
+    <b>回程</b> IT701　成田 20:45 → 桃園 23:25<br>
+    <b>飯店</b> VIA INN SHINJUKU　訂單 1747880760
+  </div>
+</div></header>
+
+<nav>
+  <a href="#d1">DAY 1</a><a href="#d2">DAY 2</a><a href="#d3">DAY 3</a>
+  <a href="#d4">DAY 4</a><a href="#d5">DAY 5</a><a href="#d1opt">Day1備選</a><a href="#arrival">抵達攻略・班次</a><a href="#todo">待辦</a><a href="#tips">實用</a>
+</nav>
+
+<div class="wrap">
+
+<!-- DAY 1 -->
+<section class="day d1" id="d1">
+  <div class="dayhd">
+    <div class="n">DAY 1</div>
+    <h2>抵達・新宿入住・晚餐</h2>
+    <div class="date">7/29（三）｜早班機的一天，下午留白，17:30 叙叙苑晚餐</div>
+  </div>
+  <ul class="stops">
+    <li class="stop"><div class="time">11:00</div><div class="body">
+      <div class="name">成田機場 第2航廈<span class="tag t-time">航班</span></div>
+      <div class="jp">成田国際空港 第2ターミナル</div>
+      <div class="note">IT200 落地。入境＋領行李抓 60 分。<b>票已線上訂好</b>，B1 掃碼取票即可，完整流程見下方「抵達攻略」。<br><span style="color:#6b6f76">若入境排隊久，可持票到綠色窗口改後一班 N'EX；晚餐 17:30 訂位，時間上留有緩衝。</span></div>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=Narita%20Airport%20Terminal%202&query_place_id=ChIJ4yM7gZ3zImARsGTFuKlNSQc">開啟導航</a>
+    </div></li>
+    <li class="stop"><div class="time">13:45</div><div class="body">
+      <div class="name">新宿站</div>
+      <div class="jp">新宿駅</div>
+      <div class="note">N'EX 直達約 80 分，中途不用換車。下車走「新南口」離飯店最近。</div>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=Shinjuku%20Station&query_place_id=ChIJH7qx1tCMGGAR1f2s7PGhMhw">開啟導航</a>
+    </div></li>
+    <li class="stop"><div class="time">14:15</div><div class="body">
+      <div class="name">VIA INN 新宿　入住<span class="tag t-book">已訂</span></div>
+      <div class="jp">ヴィアイン新宿</div>
+      <div class="note">訂單 <code>1747880760</code>／7/29 入住・8/2 退房・1 間房。未到 check-in 時間可先寄放行李。館內有自助洗衣，約 2 小時洗＋烘。</div>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=Via%20Inn%20Shinjuku&query_place_id=ChIJFzu6iumMGGARcb209Vqsrw0">開啟導航</a>
+    </div></li>
+    <li class="stop"><div class="time">15:00</div><div class="body">
+      <div class="name">自由時間<span class="tag t-free">不排行程</span></div>
+      <div class="note">今天 3 點多起床搭早班機，加上入境與 1.5 小時車程，下午<b>刻意不排任何行程</b>。<br>
+      睡個午覺、洗個澡、把行李攤開整理，或就在飯店附近隨便走走。第一天把體力補回來，後面四天才走得動。</div>
+    </div></li>
+    <li class="stop"><div class="time">16:30</div><div class="body">
+      <div class="name">回飯店放行李・稍作整理</div>
+      <div class="note">N'EX 到新宿後先進 VIA INN 放行李、梳洗一下。晚餐餐廳不在 JR 新宿站，要留出移動時間，<b>17:00 出發</b>。</div>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=Via%20Inn%20Shinjuku&query_place_id=ChIJFzu6iumMGGARcb209Vqsrw0">開啟導航</a>
+    </div></li>
+    <li class="stop"><div class="time">17:30</div><div class="body">
+      <div class="name">叙叙苑 東京歌劇城 53F<span class="tag t-book">已訂位</span></div>
+      <div class="jp">叙々苑 東京オペラシティ53｜西新宿 3-20-2　東京オペラシティビル 53F</div>
+      <div class="note">17:30 訂位。<b>53 樓看新宿副都心夜景的高級燒肉</b>，電話 <code>03-5353-0089</code>。<br>
+      <span style="color:#b4452f;font-weight:600">交通：搭京王新線到「初台」站，地下直結步行 1 分到大樓，再搭電梯上 53F。</span>不是 JR 新宿站，別走過去。從飯店過去約 15–20 分。<br>
+      餐費另加 10% 服務費，包廂另加 5%。想坐看夜景的位子建議訂位時就指定「パノラマペアシート」。<br>
+      <span style="color:#6b6f76">吃完可在 53F 慢慢看夜景，這就是今晚的收尾，不用再排別的。</span></div>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=%E5%8F%99%E3%80%85%E8%8B%91%20%E6%9D%B1%E4%BA%AC%E3%82%AA%E3%83%9A%E3%83%A9%E3%82%B7%E3%83%86%E3%82%A353">開啟導航</a>
+    </div></li>
+  </ul>
+</section>
+
+<div class="box" id="d1opt" style="border-color:#d8cfae;background:#fffdf7">
+  <h3>Day 1 備選：真的還有體力再說</h3>
+  <div style="font-size:12.5px;color:#43474d;line-height:1.7;margin-bottom:9px">
+    以下三個都在新宿步行圈、營業到晚上，<b>完全不需要事先決定</b>。當天精神好就順路繞去，累就跳過，不影響任何其他行程。
+  </div>
+  <div class="step"><span class="sn">A</span><div>
+    <b>Onitsuka Tiger 新宿</b>（11:00–20:00）　新宿 3-26-11，BicCamera 新宿東口店隔壁，地下街 A7 出口直結。2026/7/10 開幕的全球最大旗艦店，四層樓。<span style="color:#6b6f76">晚餐前順路，走路 5 分。</span>
+  </div></div>
+  <div class="step"><span class="sn">B</span><div>
+    <b>Hanimaru Cafe</b>（11:00–21:00）　大久保 1-16-19，飯店走路 12 分。依停留時間×人數計費，<b>先問總價再開始</b>。Google 3.4 分，有評論反映結帳說明不清、也有人對飼養空間有疑慮。
+  </div></div>
+  <div class="step"><span class="sn">C</span><div>
+    <b>東京都廳 南展望室</b>（到 21:30，免費）　45 樓夜景，不用門票，今天週三有開。<span style="color:#6b6f76">但今晚已在叙叙苑 53F 看過夜景，這站可省。</span>
+  </div></div>
+</div>
+
+<!-- 抵達攻略 -->
+<div class="box" id="arrival" style="border-color:#c8b98a">
+  <h3>抵達攻略：成田 T2 → 新宿（線上購票・現場取票劃位）</h3>
+  <div style="font-size:13px;color:#43474d;margin-bottom:10px;line-height:1.7">
+    IT200 停靠 <b>第 2 航廈</b>。票已在 JR-EAST 官網買好（預約券），但<b style="color:#b4452f">去程與回程都尚未指定席</b>。落地後要在 B1 售票機：掃 QR 領票 →<b> 劃去程指定席 → 順便劃回程指定席</b>。這一步比單純取票多花幾分鐘，時間要抓好。
+  </div>
+
+  <!-- 取票資訊卡 -->
+  <div style="background:#eef3f7;border:1.5px solid #1f3a5f;border-radius:9px;padding:12px 14px;margin-bottom:14px">
+    <div style="font-weight:700;color:#1f3a5f;font-size:14px;margin-bottom:6px">■ 取票資訊（截圖也存一份在相簿）</div>
+    <div style="font-size:13px;line-height:2">
+      預約號碼　<code style="font-size:13px">E69185</code><br>
+      取票代碼　<code style="font-size:13px">28402324357521228</code><br>
+      票種　　　N'EX 東京去回車票（預約券｜去回程皆需現場劃位）<br>
+      帳號　　　YIHSIANG zuo
+    </div>
+    <div style="font-size:12px;color:#b4452f;margin-top:7px;font-weight:600">
+      取票必備：① 手機出示這組 QR / 預約號碼　② 晶片護照（取票當下要用附護照讀取功能的售票機）
+    </div>
+  </div>
+
+  <!-- 圖1：售票機掃碼取票操作圖 -->
+  <div style="margin:8px 0 6px;font-weight:700;color:var(--navy);font-size:14px">■ 售票機取票操作圖（依 JR 官方三步驟）</div>
+  <svg class="sketch" viewBox="0 0 360 246" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;border:1.5px dashed #c8b98a;border-radius:10px;background:#fffdf7">
+    <!-- 機台外框 手繪抖動 -->
+    <path d="M116,20 Q114,18 120,17 L238,16 Q245,17 244,22 L245,196 Q244,202 238,201 L120,202 Q114,201 115,196 Z" fill="#f3eee2" stroke="#5a4a2f" stroke-width="2.2" stroke-linejoin="round"/>
+    <!-- 上方按鈕列 手繪 -->
+    <path d="M126,28 L233,27 Q236,27 235,31 L234,44 Q234,47 231,46 L127,47 Q124,46 125,42 L125,31 Q125,28 126,28 Z" fill="#2f6bb4" stroke="#1c4a80" stroke-width="1.4"/>
+    <text x="180" y="40" font-size="8.5" text-anchor="middle" fill="#fff">指定席 / 自由席 / 乗車券</text>
+    <path d="M127,51 L178,50 Q181,50 180,54 L180,63 Q180,66 177,65 L128,66 Q125,65 126,61 L126,54 Q126,51 127,51 Z" fill="#c8102e" stroke="#8a0a1f" stroke-width="1.4"/>
+    <text x="152" y="61" font-size="8" text-anchor="middle" fill="#fff" font-weight="bold">おトクなきっぷ</text>
+    <path d="M184,51 L233,50 Q236,50 235,54 L235,63 Q235,66 232,65 L185,66 Q182,65 183,61 L183,54 Q183,51 184,51 Z" fill="#e8a200" stroke="#a87400" stroke-width="1.4"/>
+    <text x="209" y="61" font-size="8" text-anchor="middle" fill="#fff" font-weight="bold">QR</text>
+    <!-- 螢幕 -->
+    <path d="M128,72 L232,71 Q235,71 234,75 L233,120 Q233,124 230,123 L129,124 Q126,123 127,119 L127,75 Q127,72 128,72 Z" fill="#e2ecf2" stroke="#5a4a2f" stroke-width="1.6"/>
+    <text x="180" y="94" font-size="9.5" text-anchor="middle" fill="#1f3a5f" class="hd">觸控螢幕</text>
+    <text x="180" y="110" font-size="8.5" text-anchor="middle" fill="#43474d">紫色機台・可切中文</text>
+    <!-- QR 掃描區 手繪方框 -->
+    <path d="M130,132 L170,131 Q173,131 172,135 L171,170 Q171,173 168,172 L131,173 Q128,172 129,168 L129,135 Q129,132 130,132 Z" fill="#1a1a1a" stroke="#e8a200" stroke-width="2.6"/>
+    <path d="M140,144 L160,144 M140,144 L140,160 M160,144 L160,160 M140,160 L160,160" stroke="#e8a200" stroke-width="1.4" fill="none"/>
+    <text x="150" y="186" font-size="8.5" text-anchor="middle" fill="#8a6414" class="hd">QR掃描區</text>
+    <!-- 護照口 -->
+    <path d="M182,132 L236,131 Q239,131 238,135 L238,144 Q238,147 235,146 L183,147 Q180,146 181,142 Z" fill="#3a3a3a" stroke="#222" stroke-width="1.3"/>
+    <text x="209" y="142" font-size="8" text-anchor="middle" fill="#ffd98a">護照插入口</text>
+    <!-- 出票口 -->
+    <path d="M182,152 L236,151 Q239,151 238,155 L238,162 Q238,165 235,164 L183,165 Q180,164 181,160 Z" fill="#222" stroke="#111" stroke-width="1.3"/>
+    <text x="209" y="161" font-size="7.5" text-anchor="middle" fill="#fff">車票取出口</text>
+
+    <!-- 步驟標號 手繪圓圈 -->
+    <circle cx="26" cy="60" r="12" fill="none" stroke="#b4452f" stroke-width="2.4"/>
+    <text x="26" y="65" font-size="13" text-anchor="middle" fill="#b4452f" font-weight="bold">1</text>
+    <text x="44" y="56" font-size="10.5" fill="#43474d" class="hd">選擇語言</text>
+    <text x="44" y="70" font-size="9.5" fill="#6b6f76">→ 繁體中文</text>
+
+    <circle cx="26" cy="110" r="12" fill="none" stroke="#b4452f" stroke-width="2.4"/>
+    <text x="26" y="115" font-size="13" text-anchor="middle" fill="#b4452f" font-weight="bold">2</text>
+    <text x="44" y="106" font-size="10.5" fill="#43474d" class="hd">點「讀取二維條碼」</text>
+    <text x="44" y="120" font-size="9.5" fill="#6b6f76">對應橙色 QR 鈕</text>
+
+    <circle cx="26" cy="162" r="12" fill="none" stroke="#b4452f" stroke-width="2.4"/>
+    <text x="26" y="167" font-size="13" text-anchor="middle" fill="#b4452f" font-weight="bold">3</text>
+    <text x="44" y="150" font-size="10.5" fill="#43474d" class="hd">掃 QR + 插護照</text>
+    <text x="44" y="164" font-size="9.5" fill="#6b6f76">接著現場劃指定席</text>
+    <text x="44" y="178" font-size="9.5" fill="#6b6f76">→ 吐出實體票</text>
+
+    <!-- 手繪箭頭指向機台 -->
+    <path d="M82,150 Q100,150 122,152" stroke="#b4452f" stroke-width="1.8" fill="none" stroke-dasharray="3,3"/>
+    <path d="M118,148 L124,152 L118,156" stroke="#b4452f" stroke-width="1.8" fill="none"/>
+
+    <text x="180" y="220" font-size="9.5" text-anchor="middle" fill="#8a6414" class="hd">須用「附護照讀取功能」的指定席售票機</text>
+    <text x="180" y="236" font-size="8.5" text-anchor="middle" fill="#6b6f76">B1 紫色機台多具備，找不到就問旁邊人工窗口</text>
+  </svg>
+
+  <!-- 圖2：B1動線 -->
+  <div style="margin:16px 0 6px;font-weight:700;color:var(--navy);font-size:14px">■ B1 平面動線圖（依官方站內圖手繪）</div>
+  <svg class="sketch" viewBox="0 0 360 236" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;border:1.5px dashed #c8b98a;border-radius:10px;background:#fffdf7">
+    <text x="180" y="18" font-size="11.5" text-anchor="middle" fill="#1f3a5f" class="hd" font-weight="bold">成田空港第2ビル駅 B1F（依官方站內圖手繪）</text>
+    <text x="180" y="32" font-size="8.5" text-anchor="middle" fill="#6b6f76">← 左邊下樓　往右走找 JR Tickets／紅色取票機 →</text>
+
+    <!-- 主通道外框 -->
+    <path d="M14,46 Q12,43 18,43 L346,44 Q351,44 350,49 L350,150 Q350,155 345,154 L18,153 Q12,152 13,147 Z" fill="#fbf9f2" stroke="#a99a72" stroke-width="1.4"/>
+
+    <!-- 左側：電扶梯區（粉=改札外通道）-->
+    <path d="M22,54 L120,54 Q123,54 122,58 L122,120 Q122,123 119,122 L23,121 Q20,121 21,117 L21,58 Q21,54 22,54 Z" fill="#f7dfe8" stroke="#c88aa0" stroke-width="1.3"/>
+    <!-- 電扶梯符號 手繪 -->
+    <path d="M40,66 L70,88 M44,64 L74,86 M48,62 L78,84" stroke="#5a4a2f" stroke-width="1.6" fill="none"/>
+    <text x="72" y="106" font-size="9" text-anchor="middle" fill="#8a5a70" class="hd">電扶梯／樓梯</text>
+    <text x="72" y="117" font-size="8" text-anchor="middle" fill="#6b6f76">從 1F 下來的入口</text>
+
+    <!-- 中段：JR Tickets + 紅色取票機（重點）-->
+    <path d="M150,58 L236,58 Q239,58 238,62 L238,110 Q238,113 235,112 L151,111 Q148,111 149,107 L149,62 Q149,58 150,58 Z" fill="#efe8f5" stroke="#6b4a8a" stroke-width="2.2"/>
+    <text x="194" y="74" font-size="10" text-anchor="middle" fill="#4a3266" class="hd" font-weight="bold">Tickets（JR）</text>
+    <!-- 紅色取票機圖示 手繪小框 -->
+    <path d="M168,80 L220,80 Q223,80 222,84 L222,102 Q222,105 219,104 L169,103 Q166,103 167,99 Z" fill="#fdecea" stroke="#c8102e" stroke-width="2"/>
+    <text x="194" y="93" font-size="8.5" text-anchor="middle" fill="#c8102e" font-weight="bold">🛂 取票機</text>
+    <text x="194" y="101" font-size="7.5" text-anchor="middle" fill="#8a2015">附護照讀取・在此取票劃位</text>
+
+    <!-- 緊鄰右：京成入口（警告別走錯）-->
+    <path d="M248,58 L308,58 Q311,58 310,62 L310,110 Q310,113 307,112 L249,111 Q246,111 247,107 L247,62 Q247,58 248,58 Z" fill="#eaf0f7" stroke="#2f6bb4" stroke-width="1.6"/>
+    <text x="278" y="80" font-size="9" text-anchor="middle" fill="#1c4a80" class="hd">京成入口</text>
+    <text x="278" y="94" font-size="8" text-anchor="middle" fill="#b4452f" font-weight="bold">✗ 別走這</text>
+    <text x="278" y="105" font-size="7.5" text-anchor="middle" fill="#43474d">就在 JR 隔壁</text>
+
+    <!-- 最右：黃區 JR旅行服務中心 -->
+    <path d="M318,58 L344,58 Q346,58 346,62 L346,138 Q346,141 343,140 L319,139 Q316,139 317,135 L317,62 Q317,58 318,58 Z" fill="#fdf6d8" stroke="#c9b458" stroke-width="1.4"/>
+    <text x="331" y="88" font-size="8" text-anchor="middle" fill="#7a6414" class="hd" transform="rotate(90 331 95)">JR旅行服務中心</text>
+
+    <!-- 動線紅箭頭：左下樓 → 往右到取票機 -->
+    <path d="M72,54 Q90,44 130,50 Q160,54 176,78" stroke="#b4452f" stroke-width="2.4" fill="none" stroke-dasharray="6,3"/>
+    <path d="M170,72 L178,80 L169,82" stroke="#b4452f" stroke-width="2.4" fill="none"/>
+
+    <!-- 下方月台 -->
+    <path d="M60,166 L300,166 Q303,166 302,170 L302,192 Q302,195 299,194 L61,193 Q58,193 59,189 Z" fill="#2b2b33"/>
+    <text x="180" y="183" font-size="9.5" text-anchor="middle" fill="#fff" class="hd">月台　1・2番線（往東京 / 新宿）</text>
+    <!-- 取票後往月台箭頭 -->
+    <path d="M194,112 Q194,138 182,164" stroke="#22574f" stroke-width="2.2" fill="none" stroke-dasharray="6,3"/>
+    <path d="M176,158 L181,166 L188,160" stroke="#22574f" stroke-width="2.2" fill="none"/>
+    <text x="210" y="150" font-size="8" fill="#22574f" class="hd">取票後進 JR 改札下月台</text>
+
+    <text x="330" y="228" font-size="7.5" fill="#6b6f76">依官方 B1F 平面圖手繪</text>
+  </svg>
+
+  <!-- 圖3：月台認車 -->
+  <div style="margin:16px 0 6px;font-weight:700;color:var(--navy);font-size:14px">■ 月台認車圖</div>
+  <svg class="sketch" viewBox="0 0 360 116" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;border:1.5px dashed #c8b98a;border-radius:10px;background:#fffdf7">
+    <!-- 列車主體 手繪 -->
+    <path d="M16,30 Q14,27 20,27 L344,28 Q350,28 349,33 L349,66 Q349,71 344,70 L20,70 Q14,69 15,64 Z" fill="#2b2b33" stroke="#111" stroke-width="2"/>
+    <!-- 車廂 紅黑相間 -->
+    <path d="M22,34 L88,34 Q90,34 90,37 L90,63 Q90,65 88,65 L22,65 Q20,65 20,62 L20,37 Q20,34 22,34 Z" fill="#b4452f" stroke="#7a2a1a" stroke-width="1.2"/>
+    <path d="M96,34 L162,34 Q164,34 164,37 L164,63 Q164,65 162,65 L96,65 Q94,65 94,62 L94,37 Q94,34 96,34 Z" fill="#3a3a44" stroke="#222" stroke-width="1.2"/>
+    <path d="M170,34 L236,34 Q238,34 238,37 L238,63 Q238,65 236,65 L170,65 Q168,65 168,62 L168,37 Q168,34 170,34 Z" fill="#3a3a44" stroke="#222" stroke-width="1.2"/>
+    <path d="M244,34 L310,34 Q312,34 312,37 L312,63 Q312,65 310,65 L244,65 Q242,65 242,62 L242,37 Q242,34 244,34 Z" fill="#b4452f" stroke="#7a2a1a" stroke-width="1.2"/>
+    <!-- 車窗 手繪小圓角 -->
+    <path d="M30,42 L44,42 L44,52 L30,52 Z M50,42 L64,42 L64,52 L50,52 Z" fill="#8fb0c8" opacity="0.6"/>
+    <text x="180" y="20" font-size="11.5" text-anchor="middle" fill="#1f3a5f" class="hd" font-weight="bold">N'EX 紅黑車身・全車指定席</text>
+    <text x="180" y="90" font-size="10" text-anchor="middle" fill="#b4452f" class="hd" font-weight="bold">⚠ 兩組列車連結，到東京站分離開往不同方向</text>
+    <text x="180" y="106" font-size="9.5" text-anchor="middle" fill="#43474d">照票面車廂號上車，坐錯會被載去橫濱</text>
+  </svg>
+
+  <!-- 步驟 -->
+  <div style="margin:18px 0 8px;font-weight:700;color:var(--navy);font-size:15px;
+    border-left:4px solid var(--gold);padding-left:9px">落地後步驟</div>
+  <div class="step"><span class="sn">1</span><div><b>入境審查</b>　出示 Visit Japan Web 的 QR。T2 需交人工櫃檯查驗（自助機台只在 T3）。</div></div>
+  <div class="step"><span class="sn">2</span><div><b>領行李 → 海關 → 出關</b>　出關就是 1F 入境大廳。</div></div>
+  <div class="step"><span class="sn">3</span><div><b>找「鉄道 / Railways」指標下 B1</b>　1F 已無 JR 售票櫃台，一定要下 B1。</div></div>
+  <div class="step"><span class="sn">4</span><div><b>下樓後往右走</b>　電扶梯在左端，沿通道往右到中段就是「Tickets（JR）」，裡面有紅色的取票機圖示。<span style="color:#b4452f;font-weight:600">JR 售票和京成入口緊鄰相連，認準紅色取票機那格，別走進右邊的京成入口。</span></div></div>
+  <div class="step"><span class="sn">5</span><div><b>紫色售票機取票＋劃去程位</b>　選中文 → 點「讀取二維條碼」→ 掃 QR（預約 E69185）→ 插晶片護照 → <b>選去程班次與座位</b> → 吐票。<span style="color:#b4452f;font-weight:600">要用有護照讀取功能的機台。</span></div></div>
+  <div class="step"><span class="sn">6</span><div><b>同一台順便劃回程位</b>　<span style="color:#b4452f;font-weight:600">別走開，回程 8/2 也在這台一起劃</b>：新宿 → 空港第2ビル，選 16:00 前後班次。兩趟一次搞定，回國那天就不用再排。</div></div>
+  <div class="step"><span class="sn">7</span><div><b>確認兩張票</b>　去程「空港第2ビル→新宿」、回程「新宿→空港第2ビル」，回程票收好別搞混。</div></div>
+  <div class="step"><span class="sn">8</span><div><b>進改札口</b>　插去程票、<b>取回票</b>，下月台。</div></div>
+  <div class="step"><span class="sn">9</span><div><b>核對電子看板</b>　「成田エクスプレス / Narita Express」與班次。</div></div>
+  <div class="step"><span class="sn">10</span><div><b>坐對車廂</b>　照票面車廂號（見月台圖）。約 80–95 分到新宿。</div></div>
+
+  <!-- 班次表 -->
+  <div style="margin:18px 0 8px;font-weight:700;color:var(--navy);font-size:15px;
+    border-left:4px solid var(--gold);padding-left:9px">去程班次（空港第2ビル → 新宿）</div>
+  <div style="font-size:12.5px;color:#43474d;margin-bottom:8px;line-height:1.7">
+    去程是<b>現場劃位</b>，所以到售票機時看「當下幾點、還有哪些班次有位」再選即可。<br>
+    <b style="color:#b4452f">時間推算：11:00 落地 → 入境+行李約 60 分 → 12:00 出關下 B1 → 掃碼取票＋劃兩趟位約 15 分 → 12:15–12:25 才能上月台。</b>
+  </div>
+  <table style="width:100%;border-collapse:collapse;font-size:12.5px">
+    <tr style="background:#1f3a5f;color:#fff">
+      <td style="padding:7px 8px;border:1px solid #d8d3c6">發車</td>
+      <td style="padding:7px 8px;border:1px solid #d8d3c6">班次</td>
+      <td style="padding:7px 8px;border:1px solid #d8d3c6">到新宿</td>
+      <td style="padding:7px 8px;border:1px solid #d8d3c6">說明</td>
+    </tr>
+    <tr><td style="padding:6px 8px;border:1px solid #e3e0d8">11:08</td><td style="padding:6px 8px;border:1px solid #e3e0d8">NEX 22</td><td style="padding:6px 8px;border:1px solid #e3e0d8">約 12:25</td><td style="padding:6px 8px;border:1px solid #e3e0d8;color:#6b6f76">太早</td></tr>
+    <tr><td style="padding:6px 8px;border:1px solid #e3e0d8">11:38</td><td style="padding:6px 8px;border:1px solid #e3e0d8">NEX 32</td><td style="padding:6px 8px;border:1px solid #e3e0d8">約 12:55</td><td style="padding:6px 8px;border:1px solid #e3e0d8;color:#8a6414">偏趕</td></tr>
+    <tr style="background:#eef7f0"><td style="padding:6px 8px;border:1px solid #e3e0d8"><b>12:08</b></td><td style="padding:6px 8px;border:1px solid #e3e0d8"><b>NEX 52</b></td><td style="padding:6px 8px;border:1px solid #e3e0d8">約 13:25</td><td style="padding:6px 8px;border:1px solid #e3e0d8;color:#8a6414">要很順才趕得上</td></tr>
+    <tr style="background:#eef7f0"><td style="padding:6px 8px;border:1px solid #e3e0d8"><b>12:38</b></td><td style="padding:6px 8px;border:1px solid #e3e0d8"><b>NEX 72</b></td><td style="padding:6px 8px;border:1px solid #e3e0d8">約 13:55</td><td style="padding:6px 8px;border:1px solid #e3e0d8;color:#22574f"><b>✓ 建議劃這班</b></td></tr>
+    <tr><td style="padding:6px 8px;border:1px solid #e3e0d8">13:08</td><td style="padding:6px 8px;border:1px solid #e3e0d8">NEX 92</td><td style="padding:6px 8px;border:1px solid #e3e0d8">約 14:25</td><td style="padding:6px 8px;border:1px solid #e3e0d8;color:#22574f">更寬鬆</td></tr>
+  </table>
+  <div style="font-size:12px;color:#6b6f76;margin-top:7px;line-height:1.7">
+    每小時 08 分、38 分各一班（固定 30 分間隔）。因為要劃兩趟位、又拖行李，<b>12:08 那班（取完票僅剩約 10 分）太趕，別勉強</b>；<b style="color:#22574f">劃 12:38 NEX 72 最穩</b>：約 13:55 到新宿 → 14:15 入住 → 梳洗後 17:00 出發，剛好接 17:30 叙叙苑。<br>
+    到新宿走新南口，VIA INN 步行約 6 分。若行李特別慢、連 12:38 都沒把握，就直接劃 13:08，晚餐前仍充裕。
+  </div>
+
+  <div style="margin-top:14px;padding:11px 13px;background:#fff8e8;border-radius:8px;font-size:12.5px;line-height:1.75">
+    <b style="color:#b4452f">四個容易踩到的雷</b><br>
+    ① <b>取票要帶晶片護照</b>，且用有護照讀取功能的機台，一般紫色機台多具備。<br>
+    ② <b>去回程都要當場劃位</b>，取票後別急著走，兩趟位一起劃完再離開。<br>
+    ③ <b>站名認「空港第2ビル」</b>，不是「成田空港」（那是第1航廈）。<br>
+    ④ <b>坐對車廂</b>，兩組列車在東京站分離。
+  </div>
+
+  <div style="margin-top:12px;font-size:12.5px;line-height:1.75">
+    <b>備案</b>：若掃碼機台出問題，B1 的 <b>JR 東日本旅行服務中心</b>（約 8:15–20:00，可講中文）也能憑預約號碼 E69185＋護照人工取票。
+  </div>
+</div>
+
+<!-- DAY 2 -->
+<section class="day d2" id="d2">
+  <div class="dayhd">
+    <div class="n">DAY 2</div>
+    <h2>小網神社・銀座購物・澀谷天空・壽司</h2>
+    <div class="date">7/30（四）｜日本橋 → 八重洲 → 銀座 → 澀谷 → 銀座，動線一路往西</div>
+  </div>
+  <ul class="stops">
+    <li class="stop"><div class="time">09:15</div><div class="body">
+      <div class="name">小網神社</div>
+      <div class="jp">小網神社（こあみじんじゃ）｜中央區日本橋小網町 16-23</div>
+      <div class="note">9:00–17:00。<b>強運厄除＋錢洗い弁天</b>，境內湧泉可洗鈔票銅板求財運（社務所借竹篩，洗完的錢建議收進錢包不要花掉）。<br>
+      交通：都營新宿線「馬喰橫山」或日比谷線「人形町」步行 5–8 分。<br>
+      <span style="color:#b4452f;font-weight:600">腹地很小、人非常多。</span>週末 9:00 到常要排 30 分參拜，御守要再排另一條隊。今天是<b>週四，早點到會好很多</b>，9:00 開門就進去最理想。</div>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=Koami%20Shrine&query_place_id=ChIJmY9L9lCJGGAR3ydy0pQ5y8A">開啟導航</a>
+    </div></li>
+    <li class="stop"><div class="time">11:00</div><div class="body">
+      <div class="name">BRAIN SLEEP 東京中城八重洲店</div>
+      <div class="jp">ブレインスリープ 東京ミッドタウン八重洲店｜中央區八重洲 2-2-1　2F</div>
+      <div class="note">2026/4/27 開幕的<b>第一家實驗室型門市</b>，11:00–21:00。全系列枕頭與寢具都能現場體驗，有睡眠檢測與骨架量測的客製化服務，同層還併設睡眠專門鍼灸院。<br>
+      從人形町搭日比谷線到八重洲一帶約 10 分；<b>與 JR 東京站八重洲地下街直結</b>。<br>
+      <span style="color:#6b6f76">枕頭體積大，若要買建議請店家寄回台灣或算好行李空間——你們回程是廉航。</span></div>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=BRAIN%20SLEEP%20Tokyo%20Midtown%20Yaesu&query_place_id=ChIJRZwOYF6LGGARI57OJBF68CQ">開啟導航</a>
+    </div></li>
+    <li class="stop"><div class="time">12:15</div><div class="body">
+      <div class="name">GINZA SIX　＋午餐</div>
+      <div class="jp">ギンザ シックス</div>
+      <div class="note">八重洲搭銀座線到銀座約 5 分。B2 食品層、6F 蔦屋書店與頂樓花園，午餐在 6F 或 B2 解決。銀座三越就在隔壁街廓，順路一起逛。<b>14:30 出發往澀谷。</b></div>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=GINZA%20SIX&query_place_id=ChIJAQAsR--LGGAR_AmB8WMDy88">開啟導航</a>
+    </div></li>
+    <li class="stop"><div class="time">15:10</div><div class="body">
+      <div class="name">SHIBUYA SKY<span class="tag t-book">已購票</span></div>
+      <div class="jp">渋谷スカイ</div>
+      <div class="note">入場時段 <b>15:20–15:39</b>，購入號碼 <code>00396-2026-0716-8102-1690-0003</code>（大人 ¥3,400 × 2）。<b>頂樓所有隨身物品必須寄物櫃，只有手機能帶上去。</b>提早 15 分到排電梯。銀座線 銀座→澀谷直達約 17 分。</div>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=Shibuya%20Sky&query_place_id=ChIJ4Rr2JWiLGGARcyRSHuZ-9G8">開啟導航</a>
+    </div></li>
+    <li class="stop"><div class="time">18:00</div><div class="body">
+      <div class="name">鮨よしかわ 勝 銀座<span class="tag t-book">已訂位</span></div>
+      <div class="jp">鮨よしかわ 勝 銀座（すし よしかわ かつ）</div>
+      <div class="note">東京都中央區銀座 6-12-15　いちご銀座612大厦 2F C室<br>電話 <code>+81 3-6263-9430</code>。大樓入口不明顯，認明「いちご銀座612ビル」搭電梯上 2 樓。板前約 8 席，務必準時。</div>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=%E9%AE%A8%E3%82%88%E3%81%97%E3%81%8B%E3%82%8F%20%E5%8B%9D%20%E9%8A%80%E5%BA%A7&query_place_id=ChIJwRUAfq6LGGAR1ZcJ_-bngzg">開啟導航</a>
+    </div></li>
+  </ul>
+</section>
+
+<!-- DAY 3 -->
+<section class="day d3" id="d3">
+  <div class="dayhd">
+    <div class="n">DAY 3</div>
+    <h2>鎌倉・江之島一日遊</h2>
+    <div class="date">7/31（五）｜先鎌倉市區，再走海線，日落收在江之島</div>
+  </div>
+  <ul class="stops">
+    <li class="stop"><div class="time">08:00</div><div class="body">
+      <div class="name">新宿站　買周遊券<span class="tag t-time">買票</span></div>
+      <div class="note">小田急線「<b>江之島・鎌倉周遊券</b>」（江の島・鎌倉フリーパス，約 ¥1,640/人），含新宿往返＋<b>江ノ電一日無限搭</b>。路線：新宿 →（小田急）藤澤 → 江ノ電 → 鎌倉。<br>
+      兩個買法：① <b>小田急新宿站西口的旅客服務中心</b>（人工，可講中文）② <b>自動售票機</b>（見下圖）。
+      <svg class="sketch" viewBox="0 0 340 160" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;margin-top:8px;border:1.5px dashed #c8b98a;border-radius:10px;background:#fffdf7">
+        <rect x="118" y="10" width="104" height="120" rx="8" fill="#1f6fb4" stroke="#14507f" stroke-width="2"/>
+        <rect x="130" y="22" width="80" height="46" rx="3" fill="#dfe8f0"/>
+        <text x="170" y="42" font-size="8.5" text-anchor="middle" fill="#14507f" font-family="sans-serif">觸控螢幕</text>
+        <text x="170" y="56" font-size="8" text-anchor="middle" fill="#43474d" font-family="sans-serif">右上切換語言</text>
+        <rect x="138" y="78" width="64" height="14" rx="3" fill="#b4452f"/>
+        <text x="170" y="89" font-size="8" text-anchor="middle" fill="#fff" font-family="sans-serif">投鈔/硬幣</text>
+        <rect x="138" y="98" width="64" height="12" rx="2" fill="#222"/>
+        <text x="170" y="108" font-size="7.5" text-anchor="middle" fill="#fff" font-family="sans-serif">車票取出口</text>
+        <text x="12" y="34" font-size="9.5" fill="#b4452f" font-weight="bold" font-family="sans-serif">① 螢幕右上</text>
+        <text x="12" y="47" font-size="9" fill="#43474d" font-family="sans-serif">切繁體中文</text>
+        <text x="12" y="70" font-size="9.5" fill="#b4452f" font-weight="bold" font-family="sans-serif">② 選「優惠</text>
+        <text x="12" y="83" font-size="9" fill="#43474d" font-family="sans-serif">車票/フリー</text>
+        <text x="12" y="96" font-size="9" fill="#43474d" font-family="sans-serif">パス」</text>
+        <text x="12" y="119" font-size="9.5" fill="#b4452f" font-weight="bold" font-family="sans-serif">③ 選「江の島</text>
+        <text x="12" y="132" font-size="9" fill="#43474d" font-family="sans-serif">・鎌倉」</text>
+        <text x="238" y="34" font-size="9.5" fill="#b4452f" font-weight="bold" font-family="sans-serif">④ 選人數</text>
+        <text x="238" y="47" font-size="9" fill="#43474d" font-family="sans-serif">大人 x2</text>
+        <text x="238" y="70" font-size="9.5" fill="#b4452f" font-weight="bold" font-family="sans-serif">⑤ 投錢</text>
+        <text x="238" y="83" font-size="9" fill="#43474d" font-family="sans-serif">現金為主</text>
+        <text x="238" y="106" font-size="9.5" fill="#b4452f" font-weight="bold" font-family="sans-serif">⑥ 取票</text>
+        <text x="238" y="119" font-size="9" fill="#43474d" font-family="sans-serif">＋找零</text>
+        <text x="170" y="150" font-size="9.5" text-anchor="middle" fill="#8a6414" font-weight="bold" font-family="sans-serif">機器多收現金，先備零錢比較保險</text>
+      </svg>
+      <span style="color:#6b6f76;font-size:12px">找不到機器就直接去西口人工櫃台，講「江の島・鎌倉フリーパス、大人二枚」即可。</span></div>
+    </div></li>
+    <li class="stop"><div class="time">09:30</div><div class="body">
+      <div class="name">鶴岡八幡宮</div>
+      <div class="jp">鶴岡八幡宮（つるがおかはちまんぐう）</div>
+      <div class="note">6:00 就開門。先攻最遠的這裡、再回頭逛小町通，動線比較順。清晨人少最好拍。</div>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=Tsurugaoka%20Hachimangu&query_place_id=ChIJiaqQeLhFGGARtTZQEBCtZ6g">開啟導航</a>
+    </div></li>
+    <li class="stop"><div class="time">10:45</div><div class="body">
+      <div class="name">小町通　邊走邊吃午餐</div>
+      <div class="jp">小町通り</div>
+      <div class="note">從八幡宮走回鎌倉站的商店街，慢慢逛到 13:00。可樂餅、生しらす丼（生吻仔魚蓋飯）、紫芋霜淇淋。<br><span style="color:#6b6f76">想再多一站的話：<b>報國寺</b>（竹林，抹茶座）從鎌倉站搭公車 10 分，或<b>長谷寺</b>（可俯瞰海景）在長谷站旁——兩個都是可加可不加的選項。</span></div>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=Komachi%20Street%20Kamakura&query_place_id=ChIJ-xbzrcNFGGAR2D9QXwfa0j8">開啟導航</a>
+    </div></li>
+    <li class="stop"><div class="time">13:30</div><div class="body">
+      <div class="name">七里濱海岸　海景咖啡</div>
+      <div class="jp">七里ヶ浜（しちりがはま）</div>
+      <div class="note">鎌倉站搭江ノ電約 20 分。晴天可同框富士山。附近有 bills（鬆餅）、Pacific DRIVE-IN，挑一間坐下來吹海風，不趕時間。<br><span style="color:#6b6f76"><b>bills 不需預約</b>：平日午後現場排隊通常 5–10 分，且各座位基本都看得到海。只有正對海面第一排會保留給預約客，想坐第一排可打預約專線 050-3188-5090。</span></div>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=Shichirigahama%20Beach&query_place_id=ChIJJVoJcURPGGARDdQBeLN5FOo">開啟導航</a>
+    </div></li>
+    <li class="stop"><div class="time">15:40</div><div class="body">
+      <div class="name">鎌倉高校前站　平交道</div>
+      <div class="jp">鎌倉高校前駅</div>
+      <div class="note">灌籃高手取景地。人潮很多、有工作人員管制，拍照請站在人行道側，別擋住居民通行。</div>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=Kamakurakokomae%20Station&query_place_id=ChIJIRZ85hZPGGARffzavFo4QRk">開啟導航</a>
+    </div></li>
+    <li class="stop"><div class="time">17:00</div><div class="body">
+      <div class="name">江之島　展望燈塔 Sea Candle</div>
+      <div class="jp">江の島シーキャンドル</div>
+      <div class="note">開到 20:00。先上島逛神社與岩屋，7 月底日落約 <b>18:45</b>，抓 18:00 上塔剛好看夕陽轉夜景。上島有付費手扶梯（エスカー）可省腿力。晚餐在島上或江之島站前吃。</div>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=Enoshima%20Sea%20Candle&query_place_id=ChIJvVsEzuVOGGARs99YuxNfbDU">開啟導航</a>
+    </div></li>
+  </ul>
+</section>
+
+<!-- DAY 4 -->
+<section class="day d4" id="d4">
+  <div class="dayhd">
+    <div class="n">DAY 4</div>
+    <h2>醫美微整・休息・江戶川花火</h2>
+    <div class="date">8/1（六）｜上午診所，下午休息，晚上花火</div>
+  </div>
+  <ul class="stops">
+    <li class="stop"><div class="time">10:00</div><div class="body">
+      <div class="name">The Arte Clinic　醫美微整<span class="tag t-book">需預約</span></div>
+      <div class="jp">The Arte Clinic（ジ・アルテクリニック）｜西新宿 5-5-1　ザ・パークハウス西新宿タワー60　2F</div>
+      <div class="note">電話 <code>03-6300-4551</code>。<b>週六林醫師（中文看診）有診，10:00–14:00 / 15:00–19:00。</b>初診諮詢費 8/15 前免費。<br>
+      交通：飯店搭丸之內線到新宿、轉都營大江戶線至「西新宿五丁目」，約 30 分，<b>9:30 出發</b>。<br>
+      <span style="color:#b4452f;font-weight:600">⚠ 關鍵決策點：進診間務必先跟醫師說「今晚要去戶外花火大會約 4 小時、會流汗」，讓醫師判斷今天適不適合做、或改做不受高溫影響的項目（如胎盤素點滴幾乎無術後限制）。</span><br>
+      <span style="color:#6b6f76">水光／玻尿酸／肉毒術後一般建議 24 小時內避免高溫、流汗、按壓；肉毒 4 小時內勿平躺勿壓臉。是否參加花火以醫師現場建議為準。預留到 12:30。</span></div>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=The%20Arte%20Clinic%20Nishishinjuku&query_place_id=ChIJK192dBjzGGARZhtMLEFhhTA">開啟導航</a>
+    </div></li>
+    <li class="stop"><div class="time">13:00</div><div class="body">
+      <div class="name">回飯店休息<span class="tag t-free">重要</span></div>
+      <div class="note">診所結束後回新宿吃午餐、回飯店休息。<b>術後下午別安排行程</b>，讓皮膚穩定、補足體力。<br>
+      <span style="color:#6b6f76">若醫師建議今天不宜曝曬流汗，晚上花火就改為在新宿室內晚餐（可訂高樓景觀餐廳），把花火放掉——別為了活動勉強術後的身體。</span></div>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=Via%20Inn%20Shinjuku&query_place_id=ChIJFzu6iumMGGARcb209Vqsrw0">開啟導航</a>
+    </div></li>
+    <li class="stop"><div class="time">17:30</div><div class="body">
+      <div class="name">第51回 江戶川區花火大會<span class="tag t-time">19:15</span><span class="tag t-book">視醫師建議</span></div>
+      <div class="jp">第51回 江戸川区花火大会｜江戸川河川敷（都立篠崎公園先）</div>
+      <div class="note"><b>19:15–20:20，約 14,000 發。</b>免費區要早卡位，建議 17:30 前到定位。<br>去程：新宿站搭<b>都營新宿線直達篠崎</b>（不用換車），出站步行 15 分。<br>17:00 起周邊交通管制、禁自行車與汽車。<br>帶：野餐墊、扇子／小電扇、水、防蚊液、垃圾袋。<br>
+      <span style="color:#b4452f;font-weight:600">前提：上午醫師同意可曝曬流汗才來。</span></div>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=Shinozaki%20Park%20Edogawa&query_place_id=ChIJ3Zy3j_iGGGARONz2CMxJCTM">開啟導航</a>
+    </div></li>
+    <li class="stop"><div class="time">20:30</div><div class="body">
+      <div class="name">散場・回新宿</div>
+      <div class="note"><b>篠崎站散場極度壅塞。</b>兩個對策：① 往 JR 小岩站走 25 分再搭車；② 在會場附近吃個東西、等 21:30 後人潮散了再走。硬擠篠崎站可能排 40 分以上。</div>
+    </div></li>
+  </ul>
+</section>
+
+<!-- DAY 5 -->
+<section class="day d5" id="d5">
+  <div class="dayhd">
+    <div class="n">DAY 5</div>
+    <h2>淺草・返程</h2>
+    <div class="date">8/2（日）｜上午淺草，下午回程，班機 20:45</div>
+  </div>
+  <ul class="stops">
+    <li class="stop"><div class="time">09:00</div><div class="body">
+      <div class="name">退房・行李寄放</div>
+      <div class="note">VIA INN 退房後把行李寄放櫃台，輕裝出門。回程再來拿。</div>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=Via%20Inn%20Shinjuku&query_place_id=ChIJFzu6iumMGGARcb209Vqsrw0">開啟導航</a>
+    </div></li>
+    <li class="stop"><div class="time">10:00</div><div class="body">
+      <div class="name">雷門・淺草寺</div>
+      <div class="jp">雷門・浅草寺（せんそうじ）</div>
+      <div class="note">新宿搭都營新宿線 → 馬喰橫山，走到東日本橋轉都營淺草線 → 淺草，約 35 分。<b>週日仲見世通人潮多，早點到較好逛。</b>可求御守、吃人形燒、逛傳法院通。</div>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=Kaminarimon%20Sensoji&query_place_id=ChIJ0YwG28aOGGARvRKAXIBWqNk">開啟導航</a>
+    </div></li>
+    <li class="stop"><div class="time">12:00</div><div class="body">
+      <div class="name">淺草　午餐＋伴手禮<span class="tag t-time">彈性</span></div>
+      <div class="note">仲見世周邊吃天丼、蕎麥麵或鰻魚飯。<b>最後一波伴手禮在這裡收尾</b>，或回新宿站周邊（LUMINE、小田急百貨）買。<br>
+      <span style="color:#6b6f76">合羽橋道具街（廚具）走路 10 分，有興趣可繞。<b>14:30 前一定要往新宿方向移動。</b></span></div>
+    </div></li>
+    <li class="stop"><div class="time">15:00</div><div class="body">
+      <div class="name">回飯店取行李</div>
+      <div class="note">預留 30 分整理。<b>16:00 前務必往新宿站移動</b>搭 N'EX。</div>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=Via%20Inn%20Shinjuku&query_place_id=ChIJFzu6iumMGGARcb209Vqsrw0">開啟導航</a>
+    </div></li>
+    <li class="stop"><div class="time">18:15</div><div class="body">
+      <div class="name">成田機場 第2航廈<span class="tag t-time">IT701</span></div>
+      <div class="note">N'EX 從新宿約 80 分。廉航建議起飛前 2.5 小時到，18:15 抵達剛好。<b>IT701 成田 20:45 → 桃園 23:25。</b><br>
+      <span style="color:#6b6f76">回程票落地那天已取到實體票、也劃好位，今天直接拿票進閘門即可。上車前確認車廂號。</span></div>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=Narita%20Airport%20Terminal%202&query_place_id=ChIJ4yM7gZ3zImARsGTFuKlNSQc">開啟導航</a>
+    </div></li>
+  </ul>
+</section>
+
+<!-- 待辦 -->
+<div class="box warn" id="todo">
+  <h3>出發前待辦</h3>
+  <ul>
+    <li><b>The Arte Clinic 預約</b>　<b>8/1（六）10:00 第一診</b>，官網或 LINE 預約。約最早時段才不會被前面診次拖延。<b>預約時註明想做的項目、且會於當晚參加戶外花火</b>，請診所評估。並問付款是否可刷卡、初診帶護照。</li>
+    <li><b>叙叙苑 東京歌劇城 53F</b>　7/29（三）17:30 已訂位。餐廳在京王新線「初台」站，非 JR 新宿站，從飯店搭一站；想要夜景位訂位時指定「パノラマペアシート」。</li>
+    <li><b>Visit Japan Web</b>　出發前註冊並填好入境卡＋海關申報，產生 QR Code。這一步能省下成田入境排隊的大量時間。</li>
+    <li><b>N'EX 取票（已線上訂）</b>　預約號碼 E69185。落地在成田 T2 的 B1 紫色售票機掃 QR＋插晶片護照取票，<b>並當場劃 8/2 回程指定席</b>。備妥 QR 截圖與晶片護照。</li>
+    <li><b>trifa eSIM</b>　尚未購買。建議 5 天 3GB 以上方案，出發前一天先裝好設定檔，落地開啟即可。</li>
+    <li><b>Suica / PASMO</b>　建議加進 iPhone 錢包（Apple Wallet 可直接開卡儲值），江ノ電、都營線、便利商店都能刷。</li>
+    <li><b>江之島・鎌倉周遊券</b>　7/31 當天在小田急新宿站西口買即可，不用預訂。</li>
+    <li><b>花火大會有料席</b>　一般販售 7/28 截止，若想要座位要盡快；否則走免費區早點卡位。</li>
+    <li><b>旅遊平安險</b>　5 天四夜，記得投保。</li>
+  </ul>
+</div>
+
+<!-- 實用 -->
+<div class="box" id="tips">
+  <h3>實用資訊</h3>
+  <div class="kv">
+    <b>飯店</b>VIA INN 新宿（ヴィアイン新宿）<br>
+    <b>地址</b>東京都新宿區新宿 5-11-16<br>
+    <b>電話</b>+81 3-3226-5489<br>
+    <b>訂單</b>1747880760｜7/29 入住 – 8/2 退房｜1 間房 2 位大人
+  </div>
+  <ul style="margin-top:12px">
+    <li><b>天氣</b>　7 月底東京約 27–34°C、悶熱多雨。帶折傘、防曬、備用上衣，室內冷氣很強要有薄外套。</li>
+    <li><b>電壓</b>　100V，台灣兩腳扁插可直接用，不需轉接頭。</li>
+    <li><b>現金</b>　多數地方能刷卡，但小店、神社御守、祭典攤販要現金。建議備 ¥30,000–50,000 現鈔。</li>
+    <li><b>Pocket Change（零錢處理機）</b>　綠色機台，把用剩的零錢／紙鈔換成電子貨幣或點數（Suica、PASMO 加值，或樂天點數、Amazon、LINE 等禮券碼）。<b>不能換回現金。</b><br>
+    　會出現在這些地方：<b>機場</b>（成田各航廈、羽田五台、關西、新千歲、仙台、福岡）、<b>主要車站與觀光區</b>——關東約 30 處，含東京車站、新宿、上野、秋葉原、澀谷、池袋、銀座；另有部分旅客服務中心、商業設施、唐吉訶德等。<br>
+    　<b>對你們最實際的兩台：新宿</b>（住宿旁，隨時可清零錢）和<b>成田機場</b>（回國前最後一次）。<br>
+    　<span style="color:#6b6f76">機台會增減，官方 2026/3 就公告過部分撤機。出發前用官網「設置地點」地圖查最新位置：pocket-change.jp／可投入的幣別與紙鈔硬幣範圍以現場螢幕顯示為準。</span></li>
+    <li><b>免稅</b>　同店同日滿 ¥5,000 可退稅，記得帶護照。</li>
+    <li><b>緊急</b>　警察 110／消防救護 119／台北駐日經濟文化代表處 +81 3-3280-7811</li>
+  </ul>
+</div>
+
+<footer>行程可依當天體力與天氣調整，時間為建議值。</footer>
+</div>
+</body>
+</html>
