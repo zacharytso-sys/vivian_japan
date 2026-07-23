@@ -243,20 +243,22 @@
       submitBtn.disabled = true;
       submitBtn.innerText = "儲存中...";
 
-      const amount = parseFloat(amountInput.value) || 0;
-      const rate = parseFloat(rateInput.value) || 1;
-      const amountTWD = Math.round(amount * rate);
+      const currency = currencySelect.value;
+      const amountForeign = parseFloat(amountInput.value) || 0;
+      const exchangeRate = parseFloat(rateInput.value) || 1;
+      const amountTWD = Math.round(amountForeign * exchangeRate);
 
       const payload = {
+        datetime: new Date().toLocaleString("zh-TW", { timeZone: "Asia/Taipei" }),
         item: document.getElementById('item').value,
-        currency: currencySelect.value,
-        amountForeign: amount,
-        exchangeRate: rate,
+        currency: currency,
+        amountForeign: amountForeign,
+        exchangeRate: exchangeRate,
         amountTWD: amountTWD,
         paymentMethod: document.getElementById('paymentMethod').value,
-        category: document.getElementById('category').value,
-        datetime: new Date().toLocaleString("zh-TW", { timeZone: "Asia/Taipei" })
+        category: document.getElementById('category').value
       };
+
 
       try {
         await fetch(GAS_URL, {
